@@ -70,8 +70,19 @@ patientForm.addEventListener('submit', async (event) => {
 
 // Función para manejar la expansión de los detalles del paciente
 function toggleDetails(btn) {
+    console.log('Botón:', btn);
     const details = btn.nextElementSibling;
-    details.classList.toggle('expanded');
+    console.log('Siguiente elemento:', details);
+
+    // Comprobar si los detalles están expandidos
+    const isExpanded = details.classList.contains('expanded');
+
+    // Toggle de la clase 'expanded' para mostrar u ocultar los detalles
+    if (isExpanded) {
+        details.classList.remove('expanded');
+    } else {
+        details.classList.add('expanded');
+    }
 }
 
 // Obtener el carrusel de pacientes

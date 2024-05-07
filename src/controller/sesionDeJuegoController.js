@@ -23,3 +23,16 @@ exports.registrarSesionDeJuego= async(req,res) =>{
         res.status(500).json({ message: 'Error del servidor' });
       } 
 }
+exports.obtenerSesionDeJuegoPorId = async (req, res) => {
+    const { id } = req.params; // Obtiene el ID de la sesión de juego de los parámetros de la solicitud
+    try {
+        const sesionDeJuego = await SesionDeJuego.findById(id); // Busca la sesión de juego por su ID
+        if (!sesionDeJuego) {
+            return res.status(404).json({ mensaje: 'Sesión de juego no encontrada' });
+        }
+        res.status(200).json(sesionDeJuego); // Devuelve la sesión de juego encontrada
+    } catch (error) {
+        console.error('Error al obtener la sesión de juego por ID:', error);
+        res.status(500).json({ mensaje: 'Error del servidor al obtener la sesión de juego' });
+    }
+};

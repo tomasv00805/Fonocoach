@@ -15,6 +15,8 @@ router.post('/pacientes/login', pacienteController.loginPaciente);
 // Rutas para el registro y gestión de administradores
 router.post('/admin/nuevo', adminController.nuevoAdmin);
 router.post('/admin/login', adminController.loginAdmin);
+router.get('/admin/:adminId', adminController.obtenerPacientesCreadosPorAdmin);
+
 
 // Rutas para las sesiones de juego
 router.post('/juego/registrarSesion/:pacienteID', registrarSesionDeJuego);

@@ -39,3 +39,26 @@ exports.loginAdmin = async (req, res) => {
     res.status(500).json({ message: 'Error del servidor' });
   }
 };
+
+exports.obtenerPacientesCreadosPorAdmin = async (req, res) => {
+  const { adminId } = req.params;
+
+  try {
+    // Buscar al administrador por su ID
+    const admin = await Admin.findById(adminId);
+
+    // Si el administrador no existe
+    if (!admin) {
+      return res.status(404).json({ message: 'Administrador no encontrado' });
+    }
+
+    // Obtener los IDs de los pacientes creados por el administrador
+    const pacientesCreados = admin.pacientesCreados;
+
+    res.status(200).json({ pacientesCreados });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error del servidor' });
+  }
+};

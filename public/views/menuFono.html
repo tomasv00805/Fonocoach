@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel de Pacientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Estilos personalizados */
+        .paciente-details {
+            display: none;
+        }
+        .expanded .paciente-details {
+            display: block;
+        }
+        #addPatientForm {
+            z-index: 9999; /* Asegura que el formulario esté por encima de otros elementos */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col items-center justify-center">
+    <!-- Botón de salida -->
+    <button id="logoutBtn" class="absolute top-4 left-4 bg-red-500 text-white px-4 py-2 rounded">Salir</button>
+
+    <!-- Carrusel de Pacientes -->
+    <div class="max-w-3xl w-full p-6 bg-white rounded-md shadow-md overflow-hidden">
+        <h2 class="text-2xl font-bold mb-4 text-center">Carrusel de Pacientes</h2>
+        <!-- Botón para agregar paciente -->
+        <button id="showAddPatientFormBtn" class="bg-blue-500 text-white font-semibold py-2 px-4 mb-4 rounded-md hover:bg-blue-600">Agregar Paciente</button>
+        
+        <!-- Lista de pacientes (carrusel) -->
+        <div id="pacienteCarousel" class="relative flex justify-between overflow-x-auto">
+            <!-- Aquí se agregarán dinámicamente los pacientes -->
+        </div>
+    </div>
+
+    <!-- Formulario para agregar paciente (inicialmente oculto) -->
+    <div id="addPatientForm" class="hidden absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-md shadow-md">
+            <h2 class="text-2xl font-bold mb-4 text-center">Agregar Paciente</h2>
+            <form id="patientForm" class="space-y-4">
+                <div>
+                    <label for="nombre" class="block mb-1">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="dni" class="block mb-1">DNI:</label>
+                    <input type="number" id="dni" name="dni" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="edad" class="block mb-1">Edad:</label>
+                    <input type="number" id="edad" name="edad" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="obraSocial" class="block mb-1">Obra Social:</label>
+                    <input type="text" id="obraSocial" name="obraSocial" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div>
+                    <label for="antecedentes" class="block mb-1">Antecedentes:</label>
+                    <textarea id="antecedentes" name="antecedentes" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" id="cancelBtn" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-md mr-2 hover:bg-red-600">Cancelar</button>
+                    <button type="submit" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/fono.js"></script>
+</body>
+</html>

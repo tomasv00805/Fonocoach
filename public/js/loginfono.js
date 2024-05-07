@@ -1,5 +1,4 @@
 
-
 // Obtener el formulario de inicio de sesión
 const loginForm = document.getElementById('loginForm');
 
@@ -24,8 +23,12 @@ loginForm.addEventListener('submit', async (event) => {
         // Verificar si la respuesta es exitosa
         if (response.ok) {
             const data = await response.json();
-            // Aquí puedes redirigir al usuario a otra página o realizar alguna otra acción
-            console.log('Inicio de sesión exitoso. ID del administrador:', data.adminId);
+            
+            // Almacenar la respuesta en sessionStorage
+            sessionStorage.setItem('adminId', data.adminId);
+
+            // Redirigir al usuario a la página de menúfono
+            window.location.href = './menuFono.html';
         } else {
             const errorData = await response.json();
             console.error('Error en inicio de sesión:', errorData.message);
@@ -33,4 +36,4 @@ loginForm.addEventListener('submit', async (event) => {
     } catch (error) {
         console.error('Error en la solicitud:', error);
     }
-});
+}); 

@@ -1,0 +1,22 @@
+[
+    {
+        "image": "../assets/tijeras.png",
+        "name": "tijera"
+    },
+    {
+        "image": "../assets/orange.png",
+        "name": "orange"
+    },
+    {
+        "image": "../assets/arbol.png",
+        "name": "arbol"
+    },
+    {
+        "image": "../assets/avion.png",
+        "name": "avion"
+    },
+    {
+        "image": "../assets/pelota.png",
+        "name": "pelota"
+    }
+]

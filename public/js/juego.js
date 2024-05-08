@@ -143,7 +143,7 @@ function startgame(){
   // Realizar diferentes acciones dependiendo del contenido del h1
   if (dificultad === "facil") {
     // Acciones para el nivel fácil
-    fetch("./data/cartasfacil.json")
+    fetch("../data/cartasfacil.json")
     .then((res) => res.json())
     .then((data) => {
       cards = [...data, ...data];
@@ -152,7 +152,7 @@ function startgame(){
       botonstart.style.display = "none";
     });
   }else if(dificultad === "medio"){
-    fetch("./data/cartasmedio.json")
+    fetch("../data/cartasmedio.json")
     .then((res) => res.json())
     .then((data) => {
       cards = [...data, ...data];
@@ -163,7 +163,7 @@ function startgame(){
       botonstart.style.display = "none";
     });
   }else{
-    fetch("./data/cards.json")
+    fetch("../data/cards.json")
     .then((res) => res.json())
     .then((data) => {
       cards = [...data, ...data];

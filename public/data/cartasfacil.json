@@ -1,0 +1,18 @@
+[
+    {
+        "image": "../assets/manzana.png",
+        "name": "manzana"
+    },
+    {
+        "image":"../assets/Key.png",
+        "name":"llave"
+    },
+    {
+        "image":"../assets/pastillas.png",
+        "name":"pastilla"
+    },
+    {
+        "image":"../assets/diente.png",
+        "name":"diente"
+    }
+]

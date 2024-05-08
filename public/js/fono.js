@@ -113,18 +113,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     const pacienteHTML = `
                         <div class="flex-none w-64 p-4 bg-gray-200 rounded-md mx-2 relative">
-                            <h3 class="font-semibold text-lg mb-2">${paciente.nombre}</h3>
-                            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600" onclick="toggleDetails(this)">Ver Detalles</button>
-                            <!-- Detalles del paciente (oculto por defecto) -->
-                            <div class="paciente-details mt-4">
-                                <p><strong>DNI:</strong> ${paciente.dni}</p>
-                                <p><strong>Edad:</strong> ${paciente.edad} años</p>
-                                <p><strong>Obra Social:</strong> ${paciente.obraSocial}</p>
-                                <p><strong>Antecedentes:</strong> ${paciente.antecedentes}</p>
-                                <!-- Botón para agregar una sección adicional -->
-                                <button class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600">Agregar Sección</button>
-                            </div>
+                        <h3 class="font-semibold text-lg mb-2">${paciente.nombre}</h3>
+                        <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600" onclick="toggleDetails(this)">Ver Detalles</button>
+                        <!-- Detalles del paciente (oculto por defecto) -->
+                        <div class="paciente-details mt-4 hidden" 
+                            data-nombre="${paciente.nombre}" 
+                            data-dni="${paciente.dni}" 
+                            data-edad="${paciente.edad}" 
+                            data-obra-social="${paciente.obraSocial}" 
+                            data-antecedentes="${paciente.antecedentes}">
                         </div>
+                    </div>
                     `;
                     pacienteCarousel.insertAdjacentHTML('beforeend', pacienteHTML);
                 } else {
@@ -139,3 +138,46 @@ document.addEventListener('DOMContentLoaded', async function() {
         console.error('Error en la solicitud:', error);
     }
 }); 
+
+// Función para abrir el modal y llenar los detalles del paciente
+function openModal(paciente) {
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+
+    // Llenar el título del modal con el nombre del paciente
+    modalTitle.textContent = `Detalles de ${paciente.nombre}`;
+
+    // Llenar el contenido del modal con los detalles del paciente
+    modalContent.innerHTML = `
+        <p><strong>DNI:</strong> ${paciente.dni}</p>
+        <p><strong>Edad:</strong> ${paciente.edad} años</p>
+        <p><strong>Obra Social:</strong> ${paciente.obraSocial}</p>
+        <p><strong>Antecedentes:</strong> ${paciente.antecedentes}</p>
+        <!-- Botón para agregar una sesión adicional -->
+        <button id="addSessionBtn" class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600">Agregar Sesión</button>
+    `;
+
+    // Mostrar el modal
+    document.getElementById('patientDetailsModal').classList.remove('hidden');
+}
+
+// Cerrar el modal cuando se hace clic en el botón "Cerrar"
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('patientDetailsModal').classList.add('hidden');
+});
+
+// Función para manejar la expansión de los detalles del paciente
+function toggleDetails(btn) {
+    const details = btn.nextElementSibling;
+
+    // Llamar a la función openModal cuando se hace clic en "Ver Detalles"
+    openModal({
+        nombre: details.dataset.nombre,
+        dni: details.dataset.dni,
+        edad: details.dataset.edad,
+        obraSocial: details.dataset.obraSocial,
+        antecedentes: details.dataset.antecedentes
+    });
+}
+
+

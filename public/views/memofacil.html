@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FONOCOACH</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h1 id="dificultad">Facil</h1>
+    <Button class="start" onclick="startgame()">Iniciar</Button>
+    <div class="grid-container">
+    </div>
+    <div class="felicidades">Felicidades</div>
+    <p>Intentos: <span class="score"></span></p>
+    <div class="actions" id="actions">
+        <button onclick="restart1()">Reiniciar</button>
+        <button onclick="redirectToNextLevel('/memointermedio.html')">Siguiente nivel</button>
+    </div>
+    <script src="../js/juego.js"></script>
+  </body>
+</html>

@@ -7,10 +7,11 @@ const pacienteController = require('./controller/pacientesController');
 const { registrarSesionDeJuego, obtenerSesionDeJuegoPorId } = require('./controller/sesionDeJuegoController');
 
 // Rutas para el registro y gestión de pacientes
+router.post('/pacientes/loginpaciente', pacienteController.loginPaciente);
 router.post('/pacientes/:creadorId', pacienteController.registrarPaciente);
 router.post('/pacientes/:pacienteId/sesiones', pacienteController.registrarSesion);
 router.get('/pacientes/:id', pacienteController.encontrarPacientePorId);
-router.post('/pacientes/loginpaciente', pacienteController.loginPaciente);
+
 
 // Rutas para el registro y gestión de administradores
 router.post('/admin/nuevo', adminController.nuevoAdmin);

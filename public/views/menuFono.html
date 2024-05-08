@@ -32,16 +32,34 @@
         <div id="pacienteCarousel" class="relative flex justify-between overflow-x-auto">
             <!-- Aquí se agregarán dinámicamente los pacientes -->
         </div>
-        <div id="patientDetailsForm" class="hidden absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white p-8 rounded-md shadow-md">
-        <h2 id="patientName" class="text-2xl font-bold mb-4 text-center"></h2>
-        <div id="patientDetails" class="paciente-details">
-            <!-- Aquí se mostrarán los detalles del paciente -->
-        </div>
-    </div>
-</div>
     </div>
 
+    <!-- Modal para mostrar los detalles del paciente -->
+    <div id="patientDetailsModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- Capa de fondo del modal -->
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- Contenido del modal -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg font-semibold mb-4" id="modalTitle">Detalles del Paciente</h3>
+                    <!-- Aquí se mostrarán los detalles del paciente -->
+                    <div id="modalContent">
+                        <!-- Los detalles del paciente se llenarán aquí -->
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button id="agregarsecionBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Agregar sesion</button>
+                    <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Formulario para agregar paciente (inicialmente oculto) -->
     <div id="addPatientForm" class="hidden absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-8 rounded-md shadow-md">
@@ -74,7 +92,7 @@
             </form>
         </div>
     </div>
-
+    
     <script src="../js/fono.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@ function shuffleCards() {
 }
 
 // Funcion para generar las cartas en el tablero
-function generateCards(grid, n) {
+function generateCards(grid, n, dificultad) {
   for (let card of cards) {
     const cardElement = document.createElement("div");
     cardElement.classList.add("card");
@@ -52,7 +52,7 @@ function generateCards(grid, n) {
     grid.style.display = "grid"
     grid.appendChild(cardElement);
     cardElement.addEventListener("click", function() {
-      flipCard(cardElement, n); // Pasar el elemento de la carta como argumento
+      flipCard(cardElement, n, dificultad); // Pasar el elemento de la carta como argumento
     });
     // Voltear automáticamente la carta después de 3 segundos
     setTimeout(() => {
@@ -64,7 +64,7 @@ function generateCards(grid, n) {
   }
 }
 
-function flipCard(cardElement, n) {
+function flipCard(cardElement, n, dificultad) {
   if (lockBoard) return;
   if (cardElement === firstCard) return;
 
@@ -80,11 +80,11 @@ function flipCard(cardElement, n) {
   document.querySelector(".score").textContent = score;
   lockBoard = true;
 
-  checkForMatch(n);
+  checkForMatch(n, dificultad);
 }
 
 // Funcion para verificar si las dos cartas volteadas coinciden
-function checkForMatch(n) {
+function checkForMatch(n, dificultad) {
   let isMatch = firstCard.dataset.name === secondCard.dataset.name;
   if(isMatch){
     disableCards()
@@ -94,8 +94,46 @@ function checkForMatch(n) {
     unflipCards();
   }
   if(matchsnv1===n){
+
     gridContainer.style.display="none"
     actions.style.display= "flex"
+    const pacienteId = sessionStorage.getItem('pacienteId');
+
+    // Construir los datos de la sesión de juego
+    const nombreDelJuego = "Memoria"; // Reemplaza con el nombre del juego
+    const nivel = dificultad; // Reemplaza con el nivel del juego
+    const cantidadDeIntentos = score; // Usar la puntuación como cantidad de intentos
+
+    // Construir el cuerpo de la solicitud
+    const body = JSON.stringify({
+        nombreDelJuego,
+        nivel,
+        cantidadDeIntentos
+    });
+
+    // Realizar la solicitud fetch para registrar la sesión de juego
+    fetch(`http://localhost:9000/api/juego/registrarSesion/${pacienteId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: body
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Sesión de juego registrada exitosamente');
+            // Ocultar el grid y mostrar las acciones
+            gridContainer.style.display = "none";
+            actions.style.display = "flex";
+        } else {
+            console.error('Error al registrar la sesión de juego');
+            // Manejar el error
+        }
+    })
+    .catch(error => {
+        console.error('Error al registrar la sesión de juego:', error);
+        // Manejar el error
+    });
   }
 }
 
@@ -148,7 +186,7 @@ function startgame(){
     .then((data) => {
       cards = [...data, ...data];
       shuffleCards();
-      generateCards(gridContainer,4);
+      generateCards(gridContainer,4,dificultad);
       botonstart.style.display = "none";
     });
   }else if(dificultad === "medio"){
@@ -159,7 +197,7 @@ function startgame(){
       shuffleCards();
       const numeroDeColumnas = 5; // Define el número de columnas que deseas
       gridContainer.style.gridTemplateColumns = `repeat(${numeroDeColumnas}, 140px)`;
-      generateCards(gridContainer,5);
+      generateCards(gridContainer,5,dificultad);
       botonstart.style.display = "none";
     });
   }else{
@@ -170,7 +208,7 @@ function startgame(){
       shuffleCards();
       const numeroDeColumnas = 9; // Define el número de columnas que deseas
       gridContainer.style.gridTemplateColumns = `repeat(${numeroDeColumnas}, 140px)`;
-      generateCards(gridContainer,9);
+      generateCards(gridContainer,9,dificultad);
       botonstart.style.display = "none";
     });
   }

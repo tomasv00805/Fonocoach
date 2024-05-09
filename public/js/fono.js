@@ -113,19 +113,23 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                     const pacienteHTML = `
                         <div class="flex-none w-64 p-4 bg-gray-200 rounded-md mx-2 relative">
-                        <h3 class="font-semibold text-lg mb-2">${paciente.nombre}</h3>
-                        <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600" onclick="toggleDetails(this)">Ver Detalles</button>
-                        <!-- Detalles del paciente (oculto por defecto) -->
-                        <div class="paciente-details mt-4 hidden" 
-                            data-nombre="${paciente.nombre}" 
-                            data-dni="${paciente.dni}" 
-                            data-edad="${paciente.edad}" 
-                            data-obra-social="${paciente.obraSocial}" 
-                            data-antecedentes="${paciente.antecedentes}">
+                            <h3 class="font-semibold text-lg mb-2">${paciente.nombre}</h3>
+                            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600" onclick="toggleDetails(this)" data-id="${paciente._id}">Ver Detalles</button>
+                            <!-- Detalles del paciente (oculto por defecto) -->
+                            <div class="paciente-details mt-4 hidden" 
+                                data-nombre="${paciente.nombre}" 
+                                data-dni="${paciente.dni}" 
+                                data-edad="${paciente.edad}" 
+                                data-obra-social="${paciente.obraSocial}" 
+                                data-antecedentes="${paciente.antecedentes}">
+                            </div>
                         </div>
-                    </div>
                     `;
                     pacienteCarousel.insertAdjacentHTML('beforeend', pacienteHTML);
+
+                    // Obtener el botón "Agregar sesión" y guardar el ID del paciente
+                    const agregarSesionBtn = document.getElementById('agregarsesionBtn');
+                    agregarSesionBtn.dataset.pacienteId = paciente._id;
                 } else {
                     console.error('Error al obtener detalles del paciente:', pacienteResponse.statusText);
                 }
@@ -137,29 +141,112 @@ document.addEventListener('DOMContentLoaded', async function() {
     } catch (error) {
         console.error('Error en la solicitud:', error);
     }
-}); 
+});
+
 
 // Función para abrir el modal y llenar los detalles del paciente
-function openModal(paciente) {
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
+async function openModal(pacienteId) {
+    try {
+        const response = await fetch(`http://localhost:9000/api/pacientes/${pacienteId}`);
+        if (response.ok) {
+            const pacienteData = await response.json();
+            const paciente = pacienteData.paciente;
 
-    // Llenar el título del modal con el nombre del paciente
-    modalTitle.textContent = `Detalles de ${paciente.nombre}`;
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const sesionescontent = document.getElementById('sesionescontent')
+            sesionescontent.innerHTML = '';
+            // Llenar el título del modal con el nombre del paciente
+            modalTitle.textContent = `Detalles de ${paciente.nombre}`;
 
-    // Llenar el contenido del modal con los detalles del paciente
-    modalContent.innerHTML = `
-        <p><strong>DNI:</strong> ${paciente.dni}</p>
-        <p><strong>Edad:</strong> ${paciente.edad} años</p>
-        <p><strong>Obra Social:</strong> ${paciente.obraSocial}</p>
-        <p><strong>Antecedentes:</strong> ${paciente.antecedentes}</p>
-        <!-- Botón para agregar una sesión adicional -->
-        <button id="addSessionBtn" class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600">Agregar Sesión</button>
-    `;
-
-    // Mostrar el modal
-    document.getElementById('patientDetailsModal').classList.remove('hidden');
+            // Llenar el contenido del modal con los detalles del paciente y sus sesiones de juego
+            modalContent.innerHTML = `
+                <p><strong>Nombre:</strong> ${paciente.nombre}</p>
+                <p><strong>DNI:</strong> ${paciente.dni}</p>
+                <p><strong>Edad:</strong> ${paciente.edad} años</p>
+                <p><strong>Obra Social:</strong> ${paciente.obraSocial}</p>
+                <p><strong>Antecedentes:</strong> ${paciente.antecedentes}</p>
+                <h4 class="text-lg font-semibold mb-2">Sesiones de Juego:</h4>
+                <ul id="sesionesList" class="pl-4 overflow-y-auto max-h-40"> <!-- Agregando scroll vertical con Tailwind -->                    <!-- Aquí se llenarán dinámicamente las sesiones de juego -->
+                </ul>
+                <!-- Botón para agregar una sesión adicional -->
+                <button id="addSessionBtn" class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600" data-paciente-id="${paciente._id}" onclick="openAddSessionModal(this.dataset.pacienteId)">Agregar Sesión</button>
+            `;
+            
+            // Obtener la lista de sesiones de juego y llenarla
+            const sesionesList = document.getElementById('sesionesList');
+            for (const sesionId of paciente.sesionesDeJugo) {
+                const sesionResponse = await fetch(`http://localhost:9000/api/juego/${sesionId}`);
+                if (sesionResponse.ok) {
+                    const sesionData = await sesionResponse.json();
+                    const sesionItem = document.createElement('li');
+                    const fechaHora = new Date(sesionData.createdAt).toLocaleString();
+                    sesionItem.insertAdjacentHTML('beforeend', `<strong>${fechaHora}</strong><br>Juego: ${sesionData.nombreDelJuego} <br>Dificultad: ${sesionData.nivel}<br>Intentos: ${sesionData.cantidadDeIntentos}`);
+                    sesionesList.appendChild(sesionItem);
+                } else {
+                    console.error('Error al obtener detalles de la sesión de juego:', sesionResponse.statusText);
+                }
+            }
+            for(const sesion of paciente.sesiones){
+                const sesioncont = document.createElement('li');
+                sesioncont.textContent =`Sesion:${sesion}`
+                sesionescontent.appendChild(sesioncont)
+            }
+            // Mostrar el modal
+            document.getElementById('patientDetailsModal').classList.remove('hidden');
+        } else {
+            console.error('Error al obtener detalles del paciente:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
 }
+// Función para abrir el modal de agregar sesión con el ID del paciente
+function openAddSessionModal(pacienteId) {
+    console.log(pacienteId)
+    // Obtener el modal de agregar sesión
+    const addSessionModal = document.getElementById('addSessionModal');
+    // Mostrar el modal
+    addSessionModal.classList.remove('hidden');
+
+    // Obtener el textarea del modal
+    const sesionTextarea = document.getElementById('sesionTextarea');
+
+    // Agregar evento al botón de guardar sesión
+    const guardarSesionBtn = document.getElementById('guardarSesionBtn');
+    guardarSesionBtn.addEventListener('click', async function() {
+        const sesion = sesionTextarea.value;
+        console.log(sesion)
+        try {
+            // Realizar la solicitud HTTP POST para registrar la sesión
+            const response = await fetch(`http://localhost:9000/api/pacientes/${pacienteId}/sesiones`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sesion })
+            });
+            if (response.ok) {
+                // Si la respuesta es exitosa, cerrar el modal
+                addSessionModal.classList.add('hidden');
+                // Recargar los detalles del paciente para reflejar los cambios
+                openModal(pacienteId);
+            } else {
+                console.error('Error al agregar sesión:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    });
+
+    // Agregar evento al botón de cancelar
+    const cancelarBtn = document.getElementById('cancelarBtn');
+    cancelarBtn.addEventListener('click', function() {
+        // Si se cancela, cerrar el modal
+        addSessionModal.classList.add('hidden');
+    });
+}
+
 
 // Cerrar el modal cuando se hace clic en el botón "Cerrar"
 document.getElementById('closeModalBtn').addEventListener('click', () => {
@@ -168,16 +255,8 @@ document.getElementById('closeModalBtn').addEventListener('click', () => {
 
 // Función para manejar la expansión de los detalles del paciente
 function toggleDetails(btn) {
-    const details = btn.nextElementSibling;
-
-    // Llamar a la función openModal cuando se hace clic en "Ver Detalles"
-    openModal({
-        nombre: details.dataset.nombre,
-        dni: details.dataset.dni,
-        edad: details.dataset.edad,
-        obraSocial: details.dataset.obraSocial,
-        antecedentes: details.dataset.antecedentes
-    });
+    const pacienteId = btn.dataset.id; // Obtener la ID del paciente del botón
+    openModal(pacienteId);
 }
 
 

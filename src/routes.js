@@ -8,6 +8,7 @@ const { registrarSesionDeJuego, obtenerSesionDeJuegoPorId } = require('./control
 
 // Rutas para el registro y gestión de pacientes
 router.post('/pacientes/loginpaciente', pacienteController.loginPaciente);
+router.delete('/pacientes/eliminar/:id', pacienteController.eliminarPaciente);
 router.post('/pacientes/:creadorId', pacienteController.registrarPaciente);
 router.post('/pacientes/:pacienteId/sesiones', pacienteController.registrarSesion);
 router.get('/pacientes/:id', pacienteController.encontrarPacientePorId);

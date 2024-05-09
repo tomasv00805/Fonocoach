@@ -36,7 +36,7 @@
 
     <!-- Modal para mostrar los detalles del paciente -->
     <div id="patientDetailsModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
-        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="flex items-center justify-center  min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <!-- Capa de fondo del modal -->
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -44,16 +44,17 @@
 
             <!-- Contenido del modal -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="w-3/4  inline-block  align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg font-semibold mb-4" id="modalTitle">Detalles del Paciente</h3>
+                    <h3 class="text-lg font-semibold mb-4 " id="modalTitle">Detalles del Paciente</h3>
                     <!-- Aquí se mostrarán los detalles del paciente -->
-                    <div id="modalContent">
+                    <div class="flex gap-3 w-full" >
                         <!-- Los detalles del paciente se llenarán aquí -->
+                        <div class="w-1/2" id="modalContent"></div>
+                        <ul class="w-1/2" id="sesionescontent">Sesiones</ul>
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button id="agregarsecionBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Agregar sesion</button>
                     <button id="closeModalBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Cerrar</button>
                 </div>
             </div>
@@ -93,6 +94,30 @@
         </div>
     </div>
     
+    <!-- Modal para agregar sesión (inicialmente oculto) -->
+<div id="addSessionModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Capa de fondo del modal -->
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+
+        <!-- Contenido del modal -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <h3 class="text-lg font-semibold mb-4">Agregar Sesión</h3>
+                <textarea id="sesionTextarea" class="w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="Ingrese los detalles de la sesión..."></textarea>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button id="guardarSesionBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Guardar</button>
+                <button id="cancelarBtn" type="button" class="w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <script src="../js/fono.js"></script>
 </body>
 </html>

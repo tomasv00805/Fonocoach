@@ -102,3 +102,31 @@ exports.loginPaciente = async (req, res) => {
   }
 };
  
+
+exports.eliminarPaciente = async (req, res) => {
+  const id = req.params.id;
+  try {
+    // Buscar al paciente por su ID
+    const paciente = await Paciente.findById(id);
+
+    if (!paciente) {
+      return res.status(404).json({ message: 'Paciente no encontrado' });
+    }
+    
+    // Eliminar al paciente de la base de datos
+    await paciente.deleteOne();
+
+    // Eliminar al paciente de la lista de pacientes creados por el administrador
+    const admin = await Admin.findOne({ pacientesCreados: id });
+    if (admin) {
+      admin.pacientesCreados = admin.pacientesCreados.filter(id => id.toString() !== id);
+      await admin.save();
+    }
+
+    res.status(200).json({ message: 'Paciente eliminado exitosamente' });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error del servidor' });
+  }
+};

@@ -6,13 +6,15 @@ const cors = require('cors');
 
 
 const app = express()
+app.use(express.json());
 const prot= process.env.PORT || 9000
+
 app.use(cors());
 // Importar las rutas 
 const routes = require('./routes'); 
 
 // Middleware para parsear el cuerpo de las solicitudes
-app.use(express.json());
+
 
 //concecion con mongodb
 mongoose.connect(process.env.MONGODB_URI).then(() => console.log('conectado con mongodb')).catch((error) => console.error(error))

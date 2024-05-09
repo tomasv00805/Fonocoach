@@ -18,7 +18,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             // Guardar pacienteId en sessionStorage
             sessionStorage.setItem('pacienteId', data.pacienteId);
             // Redireccionar o hacer cualquier otra acción necesaria después del login
-            window.location.href = '/dashboard'; // Redireccionar a la página de dashboard, por ejemplo
+            window.location.href = './inicio.html'; // Redireccionar a la página de dashboard, por ejemplo
         } else {
             console.error(data.message);
             // Mostrar mensaje de error al usuario, por ejemplo

@@ -4,6 +4,49 @@
     <meta charset="utf-8">
     <title>FONOCOACH</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <style>
+      /* Estilos adicionales */
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centra horizontalmente */
+        justify-content: center; /* Centra verticalmente */
+        min-height: 100vh;
+        background: linear-gradient(to bottom right, #FFB6C1, #ADD8E6); /* Degradado de rosado a celeste */
+        color: white;
+      }
+
+      h1, button {
+        margin: 10px 0; /* Espacio entre los elementos */
+        text-align: center; /* Centra horizontalmente */
+      }
+
+      p {
+        margin-top: 20px; /* Mueve la palabra "Intentos" más abajo */
+        text-align: center; /* Centra horizontalmente */
+      }
+
+      .score {
+        font-size: 24px; /* Tamaño de la fuente del número de intentos */
+      }
+
+      /* Estilo para el botón inicial */
+      .start {
+        padding: 10px 20px; /* Aumenta el espacio interno */
+        font-size: 24px; /* Tamaño de la fuente */
+        border-radius: 20px; /* Bordes redondeados */
+        background-color: #FFD700; /* Color amarillo */
+        color: #000; /* Color de texto negro */
+        border: none; /* Elimina el borde */
+        cursor: pointer; /* Cambia el cursor al pasar por encima */
+        transition: background-color 0.3s; /* Transición suave del color de fondo */
+      }
+
+      /* Cambia el color de fondo al pasar por encima del botón */
+      .start:hover {
+        background-color: #FFEC8B; /* Amarillo más claro */
+      }
+    </style>
   </head>
   <body>
     <h1 id="dificultad">Dificil</h1>

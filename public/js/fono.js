@@ -171,6 +171,7 @@ async function openModal(pacienteId) {
                 </ul>
                 <!-- Botón para agregar una sesión adicional -->
                 <button id="addSessionBtn" class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600" data-paciente-id="${paciente._id}" onclick="openAddSessionModal(this.dataset.pacienteId)">Agregar Sesión</button>
+                <button id="" class="mt-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600" data-paciente-id="${paciente._id}" onclick="handleEliminarPaciente(this.dataset.pacienteId)">eliminar</button>
             `;
             
             // Obtener la lista de sesiones de juego y llenarla
@@ -260,3 +261,30 @@ function toggleDetails(btn) {
 }
 
 
+// Función para eliminar un paciente
+async function eliminarPaciente(pacienteId) {
+    try {
+        const response = await fetch(`http://localhost:9000/api/pacientes/eliminar/${pacienteId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            // Si la eliminación es exitosa, recargar la página para actualizar el carrusel
+            window.location.reload();
+        } else {
+            const errorData = await response.json();
+            console.error('Error al eliminar paciente:', errorData.message);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+}
+
+// Función para manejar la eliminación de un paciente
+function handleEliminarPaciente(pacienteId) {
+    const confirmarEliminacion = confirm('¿Estás seguro de que quieres eliminar este paciente?');
+
+    if (confirmarEliminacion) {
+        eliminarPaciente(pacienteId);
+    }
+}

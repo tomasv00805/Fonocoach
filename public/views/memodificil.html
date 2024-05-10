@@ -46,6 +46,22 @@
       .start:hover {
         background-color: #FFEC8B; /* Amarillo más claro */
       }
+      /* Estilo para el botón "Terminar" */
+      .finish {
+        padding: 10px 20px; /* Aumenta el espacio interno */
+        font-size: 24px; /* Tamaño de la fuente */
+        border-radius: 20px; /* Bordes redondeados */
+        background-color: #FF69B4; /* Color rosa */
+        color: #fff; /* Color de texto blanco */
+        border: none; /* Elimina el borde */
+        cursor: pointer; /* Cambia el cursor al pasar por encima */
+        transition: background-color 0.3s; /* Transición suave del color de fondo */ 
+      }
+
+      /* Cambia el color de fondo al pasar por encima del botón "Terminar" */
+      .finish:hover {
+        background-color: #FFC0CB; /* Rosa más claro */
+      }
     </style>
   </head>
   <body>
@@ -57,7 +73,13 @@
     <p>Intentos: <span class="score"></span></p>
     <div class="actions" id="actions">
         <button onclick="restart1()">Reiniciar</button>
+        <button class="finish" onclick="finishGame()">Terminar</button>
     </div>
     <script src="../js/juego.js"></script>
+    <script>
+      function finishGame() {
+        window.location.href = 'finalizarcards.html'; // Redirige a la página finalizarcards.html
+      }
+    </script>
   </body>
 </html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>¡Juego Finalizado!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #9FB4FF; /* crema */
+            overflow: hidden; /* Evita el desplazamiento de la barra de desplazamiento */
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fdebd3; /* amarillo suave */
+            padding: 40px;
+            border-radius: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border: 10px solid #FEA9E0; /* rosa claro */
+            text-shadow: 6px 6px 10px #000000;
+            transform: translateY(0);
+            transition: transform 0.5s ease-in-out; /* Transición fluida */
+        }
+
+        h1 {
+            color: #ff69b4; /* rosa */
+            font-size: 60px; /* Tamaño de la fuente */
+            margin: 80px 0 0; /* Añadido un margen arriba */
+            font-family: 'Comic Sans MS', cursive; /* Cambia la tipografía */
+            text-shadow: 1px 1px 6px #000000; /* Agrega un efecto de sombra */
+        }
+
+        p {
+            color: #f4f4f4; /* gris oscuro */
+            margin-bottom: 20px; /* Espacio entre el texto y el botón */
+            font-size: 24px; /* Tamaño de la fuente */
+            text-shadow: 2px 1px 5px #000000;
+            font-family: 'Arial', sans-serif; /* Cambia la tipografía */
+        }
+
+        .button {
+            margin-top: 20px; /* Añadido un margen arriba */
+            transform: scale(1.05);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 45px; /* Bordes más redondeados */
+            font-size: 20px;
+            background-color: #FFF08E; /* Amarillo */
+            color: #000000; /* Letra negra */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Agregamos transiciones */
+        }
+        .memory-icon {
+      position: absolute;
+      top: 15%;
+      right: 250px;
+      transform: translateY(-50%);
+      width: 80px; /* Tamaño de la imagen */
+      height: auto;
+        }
+
+        .button:hover {
+            background-color: #ffc0cb; /* rosa claro más claro */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Juego Finalizado!</h1>
+        <p>¡Gracias por jugar!</p>
+        <p style="font-family: 'Arial', sans-serif;">Esperamos que hayas disfrutado de la experiencia.</p>
+        <button class="button" onclick="volverAlJuego()">Volver</button>
+        <img src="../assets/cerebro.png" alt="Memory Icon" class="memory-icon">
+    </div>
+
+    <script>
+        function volverAlJuego() {
+            window.location.href = 'menu.html'; // Redirige a la página menu.htm
+        }
+    </script>
+</body>
+</html>
